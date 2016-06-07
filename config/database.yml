@@ -10,12 +10,20 @@
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 #
 default: &default
-  adapter: mysql2
-  encoding: utf8
+  adapter: postgresql
+  encoding: unicode
+  database: markcalculator_development
   pool: 5
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+  username: markcalculator
+  password: password1
+
+
+#  adapter: mysql2
+ # encoding: utf8
+  #pool: 5
+  #username: root
+  #password:
+  #socket: /tmp/mysql.sock
 
 development:
   <<: *default
