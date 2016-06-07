@@ -23,7 +23,7 @@ class HomeController < ApplicationController
         @term = Term.new(:name => params['termName'])
 
         if @term.save
-            @subject = Subject.new(:name => params['courseName'],:weight => params['weight'], :terms_id => @term.id)
+            @subject = Subject.new(:name => params['courseName'],:weight => params['weight'], :term_id => @term.id)
         else
             render 'welcome'
         end

@@ -13,7 +13,7 @@
             <br>
             <%= label_tag("Weight / Credit") %>
             <br>
-            <%= number_field :weight, "", class:'form-control', :placeholder => "Weight / Credits", :required => true %>
+            <%= text_field_tag :weight, "", class:'form-control', :placeholder => "Weight / Credits", :required => true %>
             <br>
             <%= submit_tag "Create", :class => "btn btn-primary btn-lg btn-block" %>
         <% end %>
