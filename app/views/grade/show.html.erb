@@ -1,0 +1,80 @@
+    <div class="container-fluid">
+<%= render :template => "term/get_terms" %>
+<%= render :template => "subject/get_subjects" %>
+    <div class='jumbotron'>
+        <div class="row">
+            <div class="col-md-3 col-xs-3"> <h5>Course Item</h5></div>
+            <div class="col-md-3 col-xs-3"> <h5>Worth %</h5></div>
+            <div class="col-md-2 col-xs-2"> <h5>Your Mark %</h5></div>
+            <div class="col-md-2 col-xs-2"> <h5>% of Course Mark</h5></div>
+        </div>
+        <% @grades.each do |g| %>
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <p><%= g.courseItem %></p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <p><%= g.worth %>%</p>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                    <p><%= g.mark %>%</p>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                    <p><%= g.courseMark %>%</p>
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-1">
+                    <%= link_to delete_course_path(:id => g.id, :cid => @id), method: :delete do %>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    <% end %>
+                </div>
+            </div>
+        <% end %>
+        <div class="row">
+            <%= form_tag do %>
+                <%= hidden_field_tag :cid, @id %>
+                <div class="col-md-3 col-xs-3 col-sm-3">
+                <%= text_field_tag :courseItem, "" , class:'form-control', :required => true %>
+                </div>
+                <div class="col-md-3 col-xs-3 col-sm-3">
+                <%= number_field :worth, "", class: 'form-control', in: 1..100 , :required => true%>
+                </div>
+                <div class="col-md-2 col-xs-2 col-sm-2">
+                <%= number_field :mark, "", class: 'form-control', in: 1..150, :required => true %>
+                </div>
+            </div>
+            <br>
+                <%= submit_tag "Add Item", class: 'btn btn-primary' %>
+            <% end %>
+        <div class="row">
+            <div class="col-md-10 col-xs-10">
+                <h5> Your current mark for this course is <%= mark_per(@grades.sum("worth"), @grades.sum("courseMark")) %>% </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-xs-3">
+                <h5><strong>Current Mark</strong></h5>
+            </div>
+            <div class="col-md-3 col-xs-3">
+                <h5><%= @grades.sum("worth") %>%</h5>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <h5><%= mark_per(@grades.sum("worth"), @grades.sum("courseMark")) %>%</h5>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <h5><%= "%.2f" % @grades.sum("courseMark") %>%</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-xs-10">
+                <h4><strong>Final Exam Worth: <%= 100-@grades.sum("worth") %>%</strong></h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-4" data-no-turbolink>
+                <%= form_tag delete_subject_path(:id => @id), method: :delete do%>
+                    <%= submit_tag "Delete Course", :class => 'btn btn-danger'%>
+                <% end %>
+            </div>
+    </div>
+</div>
+</div>

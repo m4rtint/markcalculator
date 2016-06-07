@@ -1,0 +1,20 @@
+<%= render :template => "term/get_terms" %>
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+        <div class="jumbotron">
+        <%= form_tag "/subjects/"+params[:tid], :method => "post" do %>
+            <%= label_tag("Course Name") %>
+            <br>
+            <%= text_field_tag :courseName, "", class:'form-control', :placeholder => "Course Name / Code", :required => true %>
+            <br>
+            <%= label_tag("Weight / Credit") %>
+            <br>
+            <%= text_field_tag :weight, "", class:'form-control', :placeholder => "Weight / Credits", :required => true %>
+            <br>
+            <%= submit_tag "Create", :class => "btn btn-primary btn-lg btn-block" %>
+        <% end %>
+    </div>
+    </div>
+</div>
+</div>

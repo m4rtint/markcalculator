@@ -1,0 +1,35 @@
+<div class="container-fluid">
+<%= render template: "term/get_terms" %>
+<%= render template: "subject/get_subjects" %>
+<div class='jumbotron'>
+    <div class="row">
+        <div class="col-md-5 col-xs-5"> <h5>Course</h5></div>
+        <div class="col-md-3 col-xs-3"> <h5>Mark %</h5></div>
+        <div class="col-md-2 col-xs-2"> <h5>Weight</h5></div>
+    </div>
+    <% @subject_index.each do |s| %>
+        <div class="row">
+            <div class="col-md-5 col-sm-5 col-xs-5">
+                <p><%= s.name %></p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                <p><%= s.currentMark %>%</p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                <p><%= s.weight %></p>
+            </div>
+        </div>
+    <% end %>
+        <div class="row">
+            <div class="col-md-3 col-xs-3 col-md-offset-5 col-xs-offset-5"> <h5>Overall Mark</h5></div>
+            <div class="col-md-3 col-xs-3"> <h5>Overall Weighted Mark</h5></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-3 col-md-offset-5 col-sm-offset-5 col-xs-offset-5">
+                <p><%= "%.2f" % @subject_index.average(:currentMark) %>%</p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                <p><%= "%.2f" % weight_overall_mark(@subject_index) %>%</p>
+            </div>
+        </div>
+</div>
