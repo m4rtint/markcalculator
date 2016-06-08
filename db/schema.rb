@@ -13,39 +13,41 @@
 
 ActiveRecord::Schema.define(version: 20160606214025) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "grades", force: :cascade do |t|
-    t.string   "courseItem", limit: 255, null: false
-    t.float    "worth",      limit: 24,  null: false
-    t.float    "mark",       limit: 24,  null: false
-    t.float    "courseMark", limit: 24,  null: false
-    t.integer  "subject_id", limit: 4,   null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "courseItem", null: false
+    t.float    "worth",      null: false
+    t.float    "mark",       null: false
+    t.float    "courseMark", null: false
+    t.integer  "subject_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "subjects", force: :cascade do |t|
-    t.string   "name",        limit: 255,               null: false
-    t.float    "currentMark", limit: 24,  default: 0.0
-    t.float    "weight",      limit: 24,  default: 0.5, null: false
-    t.integer  "term_id",     limit: 4,                 null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.string   "name",                      null: false
+    t.float    "currentMark", default: 0.0
+    t.float    "weight",      default: 0.5, null: false
+    t.integer  "term_id",                   null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "terms", force: :cascade do |t|
-    t.string   "name",       limit: 255, default: "2016"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.string   "name",       default: "2016"
+    t.integer  "user_id",                     null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "provider",         limit: 255
-    t.string   "uid",              limit: 255
-    t.string   "name",             limit: 255
-    t.string   "oauth_token",      limit: 255
-    t.datetime "oauth_expires_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

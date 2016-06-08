@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-#Google Oauth
-gem "omniauth-google-oauth2"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use mysql as the database for Active Record
@@ -51,5 +49,9 @@ group :development do
   gem 'spring'
 end
 
+#heroku
 gem 'rails_12factor', group: :production
 ruby "2.0.0"
+
+#Facebook Login
+gem 'omniauth-facebook'

@@ -1,3 +1,4 @@
 class Term < ActiveRecord::Base
-     has_many :subject, :dependent => :delete_all
-end 
+     belongs_to :user
+     has_many :subject, :dependent => :destroy
+end
