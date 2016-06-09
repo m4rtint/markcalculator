@@ -1,11 +1,25 @@
 class GradeController < ApplicationController
     def show
-        #Show all the terms - top Menu bar
-        @terms = Term.all
+    #Show all the terms - top Menu bar
+    #Check for any terms
+        @terms = Term.where(:user_id => current_user.id)
+        if @terms == nil
+            return redirect_to :controller => 'start',
+                               :action => 'show'
+        end
+
+        #Check if Term user belongs to the user - else get first term
+        if !Term.where(:user_id => current_user.id, :id => params[:tid]).present?
+            return redirect_to :controller => 'term',
+                        :action => 'show_terms',
+                        :tid => @terms.first.id
+        end
+
         #Show all subject within the term - second Menu Bar
         @subject_index = Subject.where(term_id: params[:tid])
 
-        #Grab url selected specific subject grades.
+
+        #Grab :cid/:tid selected specific subject grades.
         @subject = Subject.where(term_id: params[:tid] ,id: params[:cid]).first
 
         #if url selected subject exists - show it.
@@ -16,7 +30,9 @@ class GradeController < ApplicationController
         elsif @subject_index.first != nil
             @id = @subject_index.first.id
         else
-            redirect_to :controller => 'term', :action => 'show_terms', :tid => params[:tid]
+            return redirect_to :controller => 'term',
+                            :action => 'show_terms',
+                            :tid => params[:tid]
         end
         @grades = Grade.where(subject_id: @id)
     end
