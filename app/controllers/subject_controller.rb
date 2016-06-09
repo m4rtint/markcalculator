@@ -1,7 +1,8 @@
 class SubjectController < ApplicationController
     def overall_subjects
         #Grab all the Terms For the Top menu bar in '/Overall' page
-        if @terms = Term.where(:user_id => current_user.id) == nil
+        @terms = Term.where(:user_id => current_user.id)
+        if @terms.blank?
             return redirect_to :controller => 'start',
                                :action => 'show'
         end
@@ -9,11 +10,11 @@ class SubjectController < ApplicationController
         #Check if ':tid' belongs to user
             #Query Subject of that :tid
             # => else get 1st Term stats
+        t = @terms.first.id
         if Term.where(:user_id => current_user.id, :id => params[:tid]).present?
-            @subject_index = Subject.where(term_id: params[:tid])
-        else
-            @subject_index = Subject.where(term_id: @terms.first.id)
+            t = params[:tid]
         end
+        @subject_index = Subject.where(term_id: t)
     end
 
     def post_subjects

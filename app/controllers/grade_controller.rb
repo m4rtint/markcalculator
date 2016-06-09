@@ -3,13 +3,12 @@ class GradeController < ApplicationController
     #Show all the terms - top Menu bar
     #Check for any terms
         @terms = Term.where(:user_id => current_user.id)
-        if @terms == nil
+        if @terms.blank?
             return redirect_to :controller => 'start',
                                :action => 'show'
-        end
 
         #Check if Term user belongs to the user - else get first term
-        if !Term.where(:user_id => current_user.id, :id => params[:tid]).present?
+        elsif !Term.where(:user_id => current_user.id, :id => params[:tid]).present?
             return redirect_to :controller => 'term',
                         :action => 'show_terms',
                         :tid => @terms.first.id
