@@ -22,9 +22,11 @@
     <%= form_tag({:controller => "term", :action => "post_terms"}, {:class => "navbar-form navbar-left", :role => "search"}) do %>
 
         <div class="form-group">
-            <%= text_field_tag :termName, "" , class:'form-control', :placeholder => "Term Name / Year", :required => true%>
+            <%= text_field_tag :termName, "" , class:'form-control', :placeholder => "Add Term", :required => true%>
         </div>
-        <%= submit_tag "+", :class => "btn btn-success" %>
+        <%= button_tag(type: 'submit', class: "btn btn-success") do %>
+            <span class="glyphicon glyphicon-plus"></span>
+        <% end %>
 
     <% end %>
 
@@ -34,6 +36,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <%= current_user.name %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><%= link_to "Sign Out", '/sign_out', method: :delete %></li>
+                <li role="separator" class="divider"></li>
                 <li>
     <%= form_tag delete_term_path(:tid => params[:tid]), :class => "navbar-form", :role => "search", method: :delete do %>
         <%= submit_tag "Delete Term",  :class => "btn btn-danger"%>

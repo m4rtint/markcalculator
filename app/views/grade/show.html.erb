@@ -23,7 +23,7 @@
                     <p><%= g.courseMark %>%</p>
                 </div>
                 <div class="col-md-1 col-sm-1 col-xs-1">
-                    <%= link_to delete_course_path(:id => g.id, :cid => @id), method: :delete do %>
+                    <%= link_to delete_course_path(:id => g.id, :cid => params[:cid]), method: :delete do %>
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     <% end %>
                 </div>
@@ -31,15 +31,14 @@
         <% end %>
         <div class="row">
             <%= form_tag do %>
-                <%= hidden_field_tag :cid, @id %>
                 <div class="col-md-3 col-xs-3 col-sm-3">
                 <%= text_field_tag :courseItem, "" , class:'form-control', :required => true %>
                 </div>
                 <div class="col-md-3 col-xs-3 col-sm-3">
-                <%= number_field :worth, "", class: 'form-control', in: 1..100 , :required => true%>
+                <%= number_field_tag :worth, "", class: 'form-control', in: 1..100 , step: 'any', :required => true%>
                 </div>
                 <div class="col-md-2 col-xs-2 col-sm-2">
-                <%= number_field :mark, "", class: 'form-control', in: 1..150, :required => true %>
+                <%= number_field_tag :mark, "", class: 'form-control', in: 0..150, step: 'any',:required => true %>
                 </div>
             </div>
             <br>
@@ -71,7 +70,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-4" data-no-turbolink>
-                <%= form_tag delete_subject_path(:id => @id), method: :delete do%>
+                <%= form_tag delete_subject_path(:id => params[:cid]), method: :delete do%>
                     <%= submit_tag "Delete Course", :class => 'btn btn-danger'%>
                 <% end %>
             </div>

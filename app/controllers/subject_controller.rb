@@ -1,8 +1,9 @@
 class SubjectController < ApplicationController
+
+    #Grab all the Terms For the Top menu bar in '/Overall' page
     def overall_subjects
-        #Grab all the Terms For the Top menu bar in '/Overall' page
-        @terms = Term.where(:user_id => current_user.id)
-        if @terms.blank?
+        #@terms = Term.where(:user_id => current_user.id)
+        if !@terms = Term.where(:user_id => current_user.id)
             return redirect_to :controller => 'start',
                                :action => 'show'
         end
@@ -18,14 +19,22 @@ class SubjectController < ApplicationController
     end
 
     def post_subjects
-        #TODO - Value validation
-        #Check if weight is a int/float
+        #Value validation
         #check if tid exists
-        @subject = Subject.new(:name => params['courseName'],:weight => params['weight'],:term_id => params['tid'])
-        if @subject.save
-            redirect_to controller: 'grade', action: :show ,:tid => params['tid'].to_s, :cid => @subject.id.to_s
+        @subject = Subject.new(:name => params['courseName'],
+                                :weight => params['weight'],
+                                :term_id => params['tid'])
+        if !@subject.valid?
+            flash[:danger] = "Please Input Valid Values"
+        elsif @subject.save
+            redirect_to controller: 'grade',
+                        action: :show ,
+                        :tid => params['tid'].to_s,
+                        :cid => @subject.id.to_s
         else
-            render 'show'
+            flash[:warning] = "A Random Bug Occured, Please Try Again"
+            render redirect_to action: "show",
+                                id:0
         end
     end
 

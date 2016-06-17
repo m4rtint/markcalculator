@@ -13,11 +13,12 @@
             <br>
             <%= label_tag("Weight / Credit") %>
             <br>
-            <%= text_field_tag :weight, "", class:'form-control', :placeholder => "Weight / Credits", :required => true %>
+            <%= number_field_tag :weight, "", class:'form-control', :placeholder => "Weight / Credits",:step => 'any', :required => true %>
             <br>
             <%= submit_tag "Create", :class => "btn btn-primary btn-lg btn-block" %>
         <% end %>
-    </div>
+        </div>
+        <%= link_to "Log Out", "/sign_out",method: :delete,:class => "btn btn-danger btn-lg btn-block" %>
     </div>
 </div>
 </div>

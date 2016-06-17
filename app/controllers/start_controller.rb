@@ -28,21 +28,32 @@ class StartController < ApplicationController
         #Query userID that is posting new term
         @user_id  = User.where(:uid => current_user.uid).take
 
-        #TODO - value validation for course weight
+        #Check if params are not null
+        if params['termName'].blank? ||
+            params['courseName'].blank? ||
+            params['weight'].blank?
+            flash[:danger] = "Please Don't Leave Any Field Blank"
+            return render :controller => 'start',
+                                :action => 'show'
+        end
+
         @term = Term.new(:name => params['termName'],:user_id => @user_id.id)
 
         if @term.save
             @subject = Subject.new(:name => params['courseName'],:weight => params['weight'], :term_id => @term.id)
         else
+            flash[:warning] = "A Random Bug Occured, Please Try Again"
             render 'welcome'
         end
 
         if @subject.save
+            flash[:success] = "New Term and Subject Created"
             return redirect_to :controller => 'grade',
                             :action => 'show',
                             :tid => @term.id,
                             :cid => @subject.id
         else
+            flash[:warning] = "A Random Bug Occured, Please Try Again"
             render 'welcome'
         end
     end
