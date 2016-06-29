@@ -2,7 +2,7 @@ class SubjectController < ApplicationController
 
     #Grab all the Terms For the Top menu bar in '/Overall' page
     def overall_subjects
-        #@terms = Term.where(:user_id => current_user.id)
+        #Grab all terms for top menu
         if !@terms = Term.where(:user_id => current_user.id)
             return redirect_to :controller => 'start',
                                :action => 'show'
@@ -18,9 +18,13 @@ class SubjectController < ApplicationController
         @subject_index = Subject.where(term_id: t)
     end
 
+    #Post new subject within a term
     def post_subjects
-        #Value validation
         #check if tid exists
+        if !Term.where(:user_id => current_user.id,:id => params['tid']).present?
+            return redirect_to "/start"
+        end
+
         @subject = Subject.new(:name => params['courseName'],
                                 :weight => params['weight'],
                                 :term_id => params['tid'])
@@ -39,14 +43,21 @@ class SubjectController < ApplicationController
     end
 
     def delete_subjects
+    #Check if the subject exists
+        if check_id(params[:id])
+            flash[:danger] = "Please Make sure subject belongs to you"
+            return redirect_to '/'
+        end
+    #Delete Subject
         #Find the subject to delete according to the id
         @cid = Subject.find_by(id: params[:id])
-            #TODO - check if the subject exists
+
         #save the term it's linked to
         tid = @cid.term_id
         #delete the model
         @cid.destroy
 
+    #Redirect to term
         #find the id of the first subject
         @subject_first = Subject.where(:term_id => tid).first
 

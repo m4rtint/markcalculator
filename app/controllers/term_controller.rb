@@ -1,13 +1,13 @@
 class TermController < ApplicationController
     #Show page if user have terms but no subjects
-    #Terms - Yes
-    #Subjects - No
+    #All if statements redirect to another page if any other case other than - Term => 1, Subject = 0
     def show_terms
         #Show Terms of user
         @terms = Term.where(:user_id => current_user.id)
 
         #Does the user have any terms?
         if @terms.blank?
+            #No terms - redirect to '/start'
             return redirect_to :controller => 'start',
                                 :action => 'show'
         end
@@ -26,17 +26,25 @@ class TermController < ApplicationController
                                 :tid => params[:tid],
                                 :cid => subject.id
         end
-        #If User has Terms but no subject, No If statements are true
+        #If User has Terms but no subject, None of If statements are true
     end
 
     def post_terms
         @term = Term.new(:name => params['termName'], :user_id => current_user.id)
         if @term.save
             return redirect_to :action => 'show_terms', :controller => 'term',  :tid => @term.id
+        else
+            flash[:warning] = "A Random Bug Occured, Please Try Again"
+            return redirect_to '/start'
         end
     end
 
     def delete_terms
+        #check if tid exists
+        if !Term.where(:user_id => current_user.id,:id => params[:tid]).present?
+            flash[:danger] = "Please delete only your own terms"
+            return redirect_to "/start"
+        end
         #Find the term to delete
         @term = Term.find_by(id: params[:tid])
         @term.destroy
@@ -44,9 +52,9 @@ class TermController < ApplicationController
         #Get the first term ever
         @term_first = Term.first
 
-        #if terms don't exist - go to welcome, else goto first term
+        #if terms don't exist - go to start, else goto first term
         if @term_first == nil
-            return redirect_to "/welcome"
+            return redirect_to "/start"
         else
             return redirect_to :controller => 'term',
                             :action => 'show_terms',

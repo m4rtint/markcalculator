@@ -40,16 +40,12 @@ class GradeController < ApplicationController
     #Data Validation - Check grade + subject id belong to user
     def destroy
         #Validation - Check if course id and grade id belongs to user.
-        grade = Grade.where(:id => params[:id], :subject_id => params[:cid]).first
-        subjectCheck = Subject.where(:id => params[:cid]).first
-
-        #Check if params[:cid] and params[:id] are empty
-        if subjectCheck.blank? || grade.blank?||
-            !Term.where(:user_id => current_user.id, :id => subjectCheck.term_id).present?
-                flash[:danger] = "Try not to delete data that does not belong to you"
-                return redirect_to '/'
+        if check_id(params[:cid], params[:id])
+            flash[:danger] = "Try not to delete data that does not belong to you"
+            return redirect_to '/'
         end
 
+        grade = Grade.where(:id => params[:id], :subject_id => params[:cid]).first
         #Check if destroy works
         if grade.destroy
             update_subject_grade(Grade.where(subject_id: params[:cid]),params[:cid])
@@ -62,9 +58,15 @@ class GradeController < ApplicationController
     end
 
     # Posting a new courseItem grade on main page
-    # Data Validation - Check Txt Field is not Blank
     # Make sure cid belongs to user
+    # Data Validation - Check Txt Field is not Blank
     def post
+        # Make sure cid belongs to user
+        if check_id(params[:cid])
+            flash[:danger] = "Try not to post in places that doesn't belong to you"
+            return redirect_to '/'
+        end
+
         @grade = Grade.new(:courseItem => params[:courseItem],
                         :worth => params[:worth],
                         :mark => params[:mark],
@@ -74,16 +76,14 @@ class GradeController < ApplicationController
         #Data Validation - Blank values
         if !@grade.valid?
             flash[:danger] = "Please Input Valid Values"
-            return redirect_to action: "show",
-                                id:0
+            return redirect_to '/'
         elsif @grade.save
             update_subject_grade(Grade.where(subject_id: params[:cid]), params[:cid])
             return redirect_to action: "show",
                                 id:params[:cid]
         else
             flash[:warning] = "A Random Bug Occured, Please Try Again"
-            return redirect_to action: "show",
-                                id:0
+            return redirect_to '/'
         end
     end
 

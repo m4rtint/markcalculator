@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  helper_method :current_user, :flash_class
+  helper_method :current_user, :flash_class, :check_id
   before_filter :require_login
 
   private
@@ -12,20 +12,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
-#  def check_id (level, cid, id=0)
-#      #Check if cid belongs to user
-#      #Check if id belongs to user
+  def check_id (cid, id=0)
 #          #Either term/:tid/course/:cid
 #          #or term/:tid
-#    case level
-#        when "grade"
-#
-#        when "subject"
-#        else
-#            return false
-#    end
- # end
-  #end
+    if id != 0 && !Grade.where(:id => id, :subject_id => cid).present?
+        return true
+    end
+
+    subject = Subject.where(:id => cid).first
+
+    if !subject.present? || !Term.where(:user_id => current_user.id, :id => subject.term_id).present?
+        return true
+    end
+
+    return false
+  end
+
 
   def flash_class(level)
       #Switch statement doesn't seem to work
