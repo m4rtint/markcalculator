@@ -39,7 +39,7 @@
                 <li role="separator" class="divider"></li>
                 <li>
     <%= form_tag delete_term_path(:tid => params[:tid]), :class => "navbar-form", :role => "search", method: :delete do %>
-        <%= submit_tag "Delete Term",  :class => "btn btn-danger"%>
+        <%= submit_tag "Delete Term", data: { confirm: "Are You Sure You Want To Delete This Term?"}, :class => "btn btn-danger"%>
     <% end %>
                 </li>
             </ul>
