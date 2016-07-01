@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
     has_many :term, :dependent => :destroy
-    
+
     def self.sign_in_from_omniauth(auth)
         find_by(provider: auth['provider'], uid: auth['uid']) || create_user_from_omniauth(auth)
     end
@@ -9,7 +9,9 @@ class User < ActiveRecord::Base
         create(
             provider: auth['provider'],
             uid: auth['uid'],
-            name: auth['info']['name']
+            name: auth['info']['name'],
+            oauth_token: auth['credentials']['token'],
+            oauth_expires_at: Time.at(auth['credentials']['expires_at'])
         )
     end
 end

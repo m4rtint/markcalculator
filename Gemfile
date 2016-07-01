@@ -55,3 +55,5 @@ ruby "2.0.0"
 
 #Facebook Login
 gem 'omniauth-facebook'
+#Google Login
+gem "omniauth-google-oauth2", "~> 0.2.1"

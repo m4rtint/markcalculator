@@ -13,4 +13,8 @@ class SessionsController < ApplicationController
       session[:omniauth] = nil
       redirect_to root_url, notice: "SIGNED OUT"
   end
+
+  def failure
+    redirect_to root_url, alert: "Authentication Failed, Please Try Again"
+  end
 end
