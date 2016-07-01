@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
 
-    #OmniAuth - Facebook
-    root 'home#index'
-
+    #OmniAuth 
     get 'auth/:provider/callback', to: "sessions#create"
     get 'auth/failure', to: redirect('/ ')
     delete 'sign_out', to: "sessions#destroy", as: 'sign_out'
+
+    resources :sessions, only: [:create, :destroy]
+    resources :home, only: [:index]
+
+    root 'home#index'
 
     #application routes
     get 'term/:tid/courses/:cid' => 'grade#show'

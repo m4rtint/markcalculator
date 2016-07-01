@@ -18,6 +18,12 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
+
+#Facebook Login
+gem 'omniauth-facebook'
+#Google Login
+gem "omniauth-google-oauth2", :git => 'https://github.com/zquestz/omniauth-google-oauth2', :branch => 'master'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -52,8 +58,3 @@ end
 #heroku
 gem 'rails_12factor', group: :production
 ruby "2.0.0"
-
-#Facebook Login
-gem 'omniauth-facebook'
-#Google Login
-gem "omniauth-google-oauth2", "~> 0.2.1"
