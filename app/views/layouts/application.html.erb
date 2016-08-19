@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Grade Calculator</title>
+  <title>Mark Calculator</title>
   <meta charset="utf-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,16 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<style>body { padding-top: 70px; }</style>
+<style>
+body {
+    padding-top: 70px;
+}
+footer {
+    background-color:#eeeeee;
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+</style>
 <body>
     <div class="page-header">
         <h1>Mark Calculator <small>ALPHA</small></h1>
@@ -24,6 +33,11 @@
         </div>
     </div>
     <%= yield %>
-
 </body>
+<div class="text-center">
+    <a href="mailto:m4rtin.t@gmail.com">m4rtin.t@gmail.com</a>
+</div>
+<div class="text-center">
+    © Martin Tsang
+</div>
 </html>

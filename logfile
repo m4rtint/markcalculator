@@ -1,0 +1,12 @@
+LOG:  database system was shut down at 2016-08-19 16:20:51 EDT
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  role "markcalculator" does not exist
+FATAL:  role "markcalculator" does not exist
+FATAL:  role "markcalculator" does not exist
+FATAL:  role "markcalculator" does not exist
+FATAL:  role "markcalculator" does not exist
+FATAL:  role "markcalculator" does not exist
+FATAL:  role "markcalculator" does not exist
+FATAL:  role "markcalculator" does not exist
