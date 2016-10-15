@@ -38,7 +38,7 @@
                 <%= text_field_tag :courseItem, "" , class:'form-control', :required => true %>
                 </div>
                 <div class="col-md-3 col-xs-3 col-sm-3">
-                <%= number_field_tag :worth, "", class: 'form-control', in: 1..100 , step: 'any', :required => true%>
+                <%= number_field_tag :worth, "", class: 'form-control', in: 0..1000 , step: 'any', :required => true%>
                 </div>
                 <div class="col-md-2 col-xs-3 col-sm-3">
                 <%= number_field_tag :mark, "", class: 'form-control', in: 0..150, step: 'any',:required => true %>

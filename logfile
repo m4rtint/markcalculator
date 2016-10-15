@@ -10,3 +10,7 @@ FATAL:  role "markcalculator" does not exist
 FATAL:  role "markcalculator" does not exist
 FATAL:  role "markcalculator" does not exist
 FATAL:  role "markcalculator" does not exist
+LOG:  received smart shutdown request
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
