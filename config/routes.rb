@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     get '/term/:tid' => 'term#show_terms'
     post '/term' => 'term#post_terms'
     delete '/term/:tid' => 'term#delete_terms', as: :delete_term
+    
+    get '/settings' => 'term#get_terms_to_delete'
 
     post '/subjects/:tid' => 'subject#post_subjects'
     delete '/subjects/:id' => 'subject#delete_subjects', as: :delete_subject

@@ -46,8 +46,15 @@ class TermController < ApplicationController
             return redirect_to "/start"
         end
         #Find the term to delete
-        @term = Term.find_by(id: params[:tid])
-        @term.destroy
+        term = Term.find_by(id: params[:tid])
+
+        #Check if term Name matches with Input
+        if params[:termname] == term.name
+            term.destroy
+        else
+            flash[:warning] = "Please Enter The Correct Name For The Term You Wish To Delete"
+            return redirect_to "/settings"
+        end
 
         #Get the first term ever
         @term_first = Term.first
@@ -59,6 +66,18 @@ class TermController < ApplicationController
             return redirect_to :controller => 'term',
                             :action => 'show_terms',
                             :tid => @term_first.id
+        end
+    end
+
+    def get_terms_to_delete
+        #Show Terms of user
+        @terms = Term.where(:user_id => current_user.id)
+
+        #Does the user have any terms?
+        if @terms.blank?
+            #No terms - redirect to '/start'
+            return redirect_to :controller => 'start',
+                                :action => 'show'
         end
     end
 
