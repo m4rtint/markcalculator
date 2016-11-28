@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-    #OmniAuth 
+    #OmniAuth
     get 'auth/:provider/callback', to: "sessions#create"
     get 'auth/failure', to: redirect('/ ')
     delete 'sign_out', to: "sessions#destroy", as: 'sign_out'
@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'term/:tid/courses/:cid' => 'grade#show'
     post 'term/:tid/courses/:cid' => 'grade#post'
     delete 'term/:tid/courses/:cid' => 'grade#destroy', as: :delete_course
+    put 'term/:tid/courses/:cid' => 'grade#update', as: :put_course
 
     get '/start' => 'start#show'
     post '/start' => 'start#post_first_term'

@@ -33,7 +33,9 @@ class GradeController < ApplicationController
                             :action => 'show_terms',
                             :tid => params[:tid]
         end
-        @grades = Grade.where(subject_id: cid)
+
+        #Show all the grades
+        @grades = Grade.where(subject_id: cid).order(:created_at)
     end
 
     #Deleting a grade
@@ -54,6 +56,38 @@ class GradeController < ApplicationController
             flash[:warning] = "A Random Bug Occured, Please Try Again"
             redirect_to action: "show",
                                 id:0
+        end
+    end
+
+    #Editing a Grade
+    #Data Validation - Check Grade + Subject id belong to user
+    def update
+        #Validation - Check if course id and grade id belongs to user
+        if check_id(params[:cid],params[:id])
+            flash[:danger] = "Try not to edit data that does not belong to you"
+            return redirect_to '/'
+        end
+
+        #Get the grade active record that needs editing
+        grade = Grade.where(:id => params[:id], :subject_id => params[:cid]).first
+
+        #Edit active record
+        grade.courseItem = params[:courseItem]
+        grade.worth = params[:worth]
+        grade.mark = params[:mark]
+        grade.courseMark = "%.2f" % (params[:worth].to_f*(params[:mark].to_f/100))
+        grade.subject_id = params[:cid]
+
+        #Data Validation
+        if !grade.valid?
+            flash[:danger] = "Please Input Valid Values"
+            return redirect_to '/'
+        elsif grade.save
+            update_subject_grade(Grade.where(subject_id: params[:cid]), params[:cid])
+            return redirect_to action:"show", id:params[:cid]
+        else
+            flash[:warning] = "A Random Bug Occursed, Please Try Again"
+            return redirect_to '/'
         end
     end
 
@@ -87,6 +121,7 @@ class GradeController < ApplicationController
         end
     end
 
+    #Updates overall subject grade
     def update_subject_grade(all_grades,cid)
         currentMark = mark_per(all_grades.sum("worth"), all_grades.sum("courseMark"))
         Subject.update(cid, :currentMark => currentMark)
