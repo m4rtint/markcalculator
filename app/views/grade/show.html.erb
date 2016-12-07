@@ -93,7 +93,7 @@
                 To finish with 50%
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 text-center">
-                <%= number_to_percentage((50-fcMark.to_f)/fWorth*100) %>
+                <%= fWorth == 0 ? 0 : number_to_percentage((50-fcMark.to_f)/fWorth*100) %>
             </div>
         </div>
         <div class="row">
@@ -101,7 +101,7 @@
                 To finish with 60%
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 text-center">
-                <%= number_to_percentage((60-fcMark.to_f)/fWorth*100) %>
+                <%= fWorth == 0 ? 0 : number_to_percentage((60-fcMark.to_f)/fWorth*100) %>
             </div>
         </div>
         <div class="row">
@@ -109,7 +109,7 @@
                 To finish with 70%
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 text-center">
-                <%= number_to_percentage((70-fcMark.to_f)/fWorth*100) %>
+                <%= fWorth == 0 ? 0 : number_to_percentage((70-fcMark.to_f)/fWorth*100) %>
             </div>
         </div>
         <div class="row">
@@ -117,7 +117,7 @@
                 To finish with 80%
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 text-center">
-                <%= number_to_percentage((80-fcMark.to_f)/fWorth*100) %>
+                <%= fWorth == 0 ? 0 : number_to_percentage((80-fcMark.to_f)/fWorth*100) %>
             </div>
         </div>
         <div class="row">
@@ -125,7 +125,7 @@
                 To finish with 90%
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 text-center">
-                <%= number_to_percentage((90-fcMark.to_f)/fWorth*100) %>
+                <%= fWorth == 0 ? 0 : number_to_percentage((90-fcMark.to_f)/fWorth*100) %>
             </div>
         </div>
         <div class="row">
@@ -133,7 +133,7 @@
                 To finish with 100%
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 text-center">
-                <%= number_to_percentage((100-fcMark.to_f)/fWorth*100) %>
+                <%= fWorth == 0 ? 0 : number_to_percentage((100-fcMark.to_f)/fWorth*100) %>
             </div>
         </div>
 
